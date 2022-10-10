@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,16 +27,25 @@ class _HomePageState extends State<HomePage> {
     _razorpay.clear();
   }
 
-  void _handlePaymentSuccess() {
-    print("Success");
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    print('Success Response: $response');
+    Fluttertoast.showToast(
+        msg: "SUCCESS: ${response.paymentId!}",
+        toastLength: Toast.LENGTH_SHORT);
   }
 
-  void _handlePaymentError() {
-    print('Error');
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print('Error Response: $response');
+    Fluttertoast.showToast(
+        msg: "ERROR: ${response.code} - ${response.message!}",
+        toastLength: Toast.LENGTH_SHORT);
   }
 
-  void _handleExternalWallet() {
-    print("Wallet open");
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print('External SDK Response: $response');
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: ${response.walletName!}",
+        toastLength: Toast.LENGTH_SHORT);
   }
 
   void openCheckout() {
